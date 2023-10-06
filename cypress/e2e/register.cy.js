@@ -17,7 +17,7 @@ describe("Testes envolvendo registro de usuário", () => {
     });
 
     it("Inpedindo registro de novo usuário se já existir", () => {
-        const email = uuidv4();
+        const email = `${uuidv4()}@gmail.com`;
 
         cy.intercept({ method: "POST" }).as("routerPost");
         cy.register(email);
