@@ -16,12 +16,21 @@ Cypress.Commands.add("register", (email) => {
 
 Cypress.Commands.add("formModal", (title, content) => {
     cy.get(`[data-cy="modal-form"]:visible`).within(() => {
-        cy.get(`[data-cy="modal-title"]`).type(title);
-        cy.get(`[data-cy="modal-content"]`).type(content);
-        
-        cy.intercept({ method: "POST" }).as("methodPost");
-        cy.get(`[data-cy="modal-action"]`).click()
-        cy.wait("@methodPost").its("response.statusCode").should("eq", 201);
-    })
-
+        cy.get(`[data-cy="modal-title"]`).clear().type(title);
+        cy.get(`[data-cy="modal-content"]`).clear().type(content);
+        cy.get(`[data-cy="modal-action"]`).click();
+    });
 });
+
+Cypress.Commands.add("verifyNotepad", ({ id, title, content }) => {
+    cy.get(`[data-cy="notepad-${id}"]`).within(() => {
+        cy.get(`[data-cy="notepad-title"]`)
+            .should("be.visible")
+            .invoke("text")
+            .should("eq", title);
+        cy.get(`[data-cy="notepad-content"]`)
+            .should("be.visible")
+            .invoke("text")
+            .should("eq", content);
+    });
+})
