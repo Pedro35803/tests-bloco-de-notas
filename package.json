@@ -7,7 +7,9 @@
   "name": "tests-bloco-de-notas",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.12.18"
+  },
   "scripts": {
     "cypress": "./node_modules/.bin/cypress open --e2e",
     "test-suite": "./node_modules/.bin/cypress run",

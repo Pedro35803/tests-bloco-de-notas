@@ -8,7 +8,10 @@ module.exports = defineConfig({
     password: process.env.PASSWORD
   },
   e2e: {
-    setupNodeEvents(on, config) {},
+    setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config)
+      return config
+    },
     baseUrl: process.env.BASE_URL
   },
 });

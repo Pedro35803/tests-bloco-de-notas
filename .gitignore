@@ -1,3 +1,5 @@
 .env*
 node_modules
 cypress/downloads
+.nyc_output
+coverage
