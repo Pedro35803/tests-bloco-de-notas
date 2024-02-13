@@ -108,4 +108,33 @@ describe("Testes envolvendo notepads", () => {
             cy.get(selectorNotepad).should("not.exist");
         });
     });
+
+    it("Pesquisando Notepad com sucesso", () => {
+        const titleSearch = uuidv4();
+
+        const title = "Teste";
+        const content = uuidv4();
+
+        cy.intercept({ method: "POST", url: "api/v1/user/me/notepads" }).as(
+            "notepadPost"
+        );
+
+        cy.get(`[data-cy="add-notepad"]`).click();
+        cy.formModal(title, content);
+        cy.wait("@notepadPost").as("response");
+        cy.get("@response").its("response.statusCode").should("eq", 201);
+
+        cy.get(`[data-cy="add-notepad"]`).click();
+        cy.formModal(title, content);
+        cy.wait("@notepadPost").as("response");
+        cy.get("@response").its("response.statusCode").should("eq", 201);
+
+        cy.get(`[data-cy="add-notepad"]`).click();
+        cy.formModal(titleSearch, content);
+        cy.wait("@notepadPost").as("response");
+        cy.get("@response").its("response.statusCode").should("eq", 201);
+
+        cy.get(`[data-cy="search-notepad"]`).type(titleSearch)
+        cy.get(`[data-cy="section-notepads"]`).should("have.length", 1);
+    });
 });
